@@ -1,31 +1,40 @@
-grupo = list()
-pessoas = dict()
-cont = soma = media = 0
+galera = list()
+pessoa = dict()
+soma = media = 0
 while True:
-    pessoas['nome'] = str(input('Nome: '))
-    pessoas['sexo'] = str(input('Sexo: [M/F] ')).upper()
-    pessoas['idade'] = int(input('Idade: '))
-    soma += pessoas['idade']
-    grupo.append(pessoas.copy())
-    cont += 1
-
-    resp = str(input('Quer continuar? [S/N] '))
-    if resp in 'Nn':
+    pessoa.clear()
+    pessoa['nome'] = str(input('Nome: '))
+    while True:
+        pessoa['sexo'] = str(input('Sexo: [M/F] ')).upper()[0]
+        if pessoa['sexo'] in 'MF':
+            break
+        else:
+            print('ERRO! Por favor, digite apenas M ou F.')
+    pessoa['idade'] = int(input('Idade: '))
+    soma += pessoa['idade']
+    galera.append(pessoa.copy())
+    while True:
+        resp = str(input('Quer continuar? [S/N] ')).upper()[0]
+        if resp in 'SN':
+            break
+        else:
+            print('ERRO! Responda apenas S ou N.')
+    if resp == 'N':
         break
-media = soma / cont
-print(grupo)
 print(30*'-=')
-print(f'- O grupo tem {cont} pessoas.')
-print(f'- A média de idade é de {media:.2f} anos.')
-print(f'- As mulheres cadastradas foram: ', end='')
-
-for k, v in pessoas.items():
-    if k == 'sexo' and v == 'F':
-        print(pessoas['nome'], end=' ')
+print(f'A) Ao todo temos {len(galera)} pessoas cadastradas.')
+media = soma / len(galera)
+print(f'B) A média de idade é de {media:5.2f} anos.')
+print('C) As mulheres cadastradas foram ', end='')
+for p in galera:
+    if p['sexo'] in 'F':
+        print(f'{p["nome"]} ', end='')
 print()
-
-print(f'- Lista das pessoas que estão acima da média:')
-
-for k, v in pessoas.items():
-    if pessoas['idade'] > media:
-        print(pessoas)
+print('D) Lista das pessoas acima da média: ')
+for p in galera:
+    if p['idade'] >= media:
+        print('   ', end='')
+        for k, v in p.items():
+            print(f'{k} = {v}; ', end='')
+        print()
+print('<< ENCERRADO >>')
